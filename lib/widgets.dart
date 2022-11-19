@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 class TwotextButton extends StatelessWidget {
   final String name;
 
@@ -133,7 +133,7 @@ class InvestStock extends StatelessWidget {
         onTap: () {},
         trailing: Column(
           children: [
-            Text('${stockPrice}원',
+            Text('$stockPrice원',
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -160,7 +160,7 @@ class InvestStock extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          '${stockNumbers}주',
+          '$stockNumbers주',
           style: TextStyle(
               color: Colors.grey[600],
               fontSize: 14.0,
@@ -173,11 +173,11 @@ class InvestStock extends StatelessWidget {
 
 class HoldStock extends StatelessWidget {
   final double money;
-  const HoldStock(this.money);
+  const HoldStock(this.money, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return const Card(
       child: ListTile(),
     );
   }
@@ -186,14 +186,14 @@ class HoldStock extends StatelessWidget {
 class CurrentMoney extends StatelessWidget {
   final double currentMoney;
   final String currentProfit;
-
-  const CurrentMoney({required this.currentMoney, required this.currentProfit});
+  final f = NumberFormat("###,###");
+  CurrentMoney({super.key, required this.currentMoney, required this.currentProfit});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
           SizedBox(
             width: 10.0,
           ),
@@ -208,12 +208,12 @@ class CurrentMoney extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Text(
-              '${currentMoney}원',
-              style: TextStyle(
+              '${f.format(currentMoney)}원',
+              style: const TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -225,7 +225,7 @@ class CurrentMoney extends StatelessWidget {
               onPressed: () {},
               iconSize: 15.0,
             ),
-            SizedBox(
+            const SizedBox(
               width: 145.0,
             ),
             Container(
@@ -258,55 +258,68 @@ class CurrentMoney extends StatelessWidget {
   }
 }
 
-class InterestingStockList extends StatelessWidget {
+class InterestingStockList extends StatefulWidget {
   const InterestingStockList({Key? key}) : super(key: key);
+  @override
+  State<InterestingStockList> createState() => _InterestingStockListState();
+}
 
+class _InterestingStockListState extends State<InterestingStockList> {
+  bool _down = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(1.0, 15.0, 1.0, 0.0),
       color: Colors.grey[900],
+      height: 115,
       child: Column(
         children: [
-          ListTile(
-            leading: Text(
-              '관심 주식',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          Row(
+            children: [
+              const SizedBox(
+                width: 10,
               ),
-            ),
-            trailing: TextButton(
-              onPressed: () {},
-              child: Text(
-                '편집하기',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.grey[400],
-                  fontWeight: FontWeight.bold,
+              const Text(
+                "관심주식",
+                style:
+                TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "편집하기",
+                  style:
+                  TextStyle(color: Colors.grey, fontSize: 16),
                 ),
-              ),
-            ),
+              )
+            ],
           ),
-          TextButton(
-            onPressed: () {},
-            child: ListTile(
-              leading: Text(
-                '기본',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+          const SizedBox(
+            height: 25,
+          ),
+          //const DrownDown(),
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                // Toggle light when tapped.
+                _down = !_down;
+              });
+            },
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text("기본", style: TextStyle(fontSize: 15),),
+                const Spacer(),
+                Icon(
+                  _down ? Icons.arrow_downward : Icons.arrow_upward,
                   color: Colors.grey[400],
                 ),
-              ),
-              trailing: Icon(
-                Icons.arrow_downward_rounded,
-                size: 20.0,
-                color: Colors.grey[400],
-              ),
+                const SizedBox(width: 10,)
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
@@ -524,6 +537,57 @@ class verticalDivider extends StatelessWidget {
       width: 1.0,
       thickness: 3.0,
       color: Colors.grey[700],
+    );
+  }
+}
+
+class Stock extends StatelessWidget {
+  final String img;
+  final int curPrice;
+  final double change;
+  final f = NumberFormat("###,###");
+  Stock({super.key, required this.img, required this.curPrice, required this.change});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            CircleImg(img: "$img.png"),
+            Text(img)
+          ],
+        ),
+        Column(
+          children: [
+            Text(
+              "$change%",
+              style: TextStyle(
+                  color: change > 0 ? Colors.red : Colors.blue
+              ),
+            ),
+            Text('${f.format(curPrice)}원'),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class CircleImg extends StatelessWidget {
+  final String img;
+  const CircleImg({super.key, required this.img});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage("assets/images/$img"),
+            )
+        )
     );
   }
 }

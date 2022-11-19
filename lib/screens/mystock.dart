@@ -9,44 +9,120 @@ class MyStocks extends StatefulWidget {
 }
 
 class _MyStocksState extends State<MyStocks> {
+  bool _down = false;
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
       Column(
-        children: const [
+        children: [
           CurrentMoney(
-            currentMoney: 5.463,
+            currentMoney: 5463,
             currentProfit: '-455원 (7.7%)',
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
-          currentPriceButton('현재가'),
-          Nationality('국내'),
-          InvestStock(
-            image: 'samsung.png',
+          const currentPriceButton('현재가'),
+          const Nationality('국내'),
+          const InvestStock(
+            image: '삼성.png',
             stockName: '삼성전자',
             stockNumbers: '1',
             stockPrice: '1,475',
             loss: '-60(3.9%)',
           ),
-          SizedBox(
+          const SizedBox(
             height: 2.0,
           ),
-          Nationality('해외'),
-          InvestStock(
-              image: 'tesla.png',
+          const Nationality('해외'),
+          const InvestStock(
+              image: '테슬라.png',
               loss: '-210(4.7&)',
               stockName: '테슬라',
               stockNumbers: '0.011814',
               stockPrice: '4,174'),
-          Divider(
+          const Divider(
             height: 20.0,
             color: Colors.black,
           ),
         ],
       ),
-      const InterestingStockList(),
+      Container(
+        color: Colors.grey[900],
+        height: 115,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text(
+                  "관심주식",
+                  style:
+                  TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "편집하기",
+                    style:
+                    TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            //const DrownDown(),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  // Toggle light when tapped.
+                  _down = !_down;
+                });
+              },
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text("기본", style: TextStyle(fontSize: 15),),
+                  const Spacer(),
+                  Icon(
+                    _down ? Icons.arrow_downward : Icons.arrow_upward,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(width: 10,)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      Visibility(
+        visible: !_down,
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Stock(
+              img: "테슬라",
+              curPrice: 98907,
+              change: 1.6,
+            ),
+            const SizedBox(height: 10),
+            Stock(
+              img: "삼성",
+              curPrice: 8812,
+              change: -2.1,
+            ),
+            const SizedBox(height: 10),
+
+          ],
+        ),
+      ),
       const Divider(
         height: 20.0,
         color: Colors.black,

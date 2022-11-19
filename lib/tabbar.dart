@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toss_assemble/hori_scroll.dart';
 
 import 'cardbox.dart';
 import 'mini_tabbar.dart';
@@ -85,7 +86,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                   Container(
                     color: Colors.yellow[200],
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       'Tab1 View',
                       style: TextStyle(
                         fontSize: 30,
@@ -113,40 +114,37 @@ class todayDiscoverys_test extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Container(
+        SizedBox(
           height: 500,
           child: Column(
-          children: [
-            //Container(height: 100,),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 같은 간격만큼 공간을 둠
-                children: [
-                  FilledCardExample(),
-                  FilledCardExample()
-                ],
-              ),
-            ),
-            Container(
-              child: Text("실시간 차트",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0, bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 같은 간격만큼 공간을 둠
+                  children: const [
+                    FilledCardExample(),
+                    FilledCardExample()
+                  ],
                 ),
-
               ),
-              margin: EdgeInsets.only(right: 220.0, bottom: 15.0),
-
-            ),
-            Expanded(child: miniTabbar())
-          ],
-      ),
+              Container(
+                margin: const EdgeInsets.only(right: 220.0, bottom: 15.0),
+                child: const Text("실시간 차트",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20
+                  ),
+                ),
+              ),
+              Expanded(child: miniTabbar()),
+              //HoriScroll(stocker: ["빌게이츠", "워렌버핏", "짐사이먼스", "켄그리핀"])
+            ],
+          ),
         ),
       ],
       //color: Colors.black,
       //alignment: Alignment.center,
-
     );
   }
 }
