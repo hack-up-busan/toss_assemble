@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'hori_scroll.dart';
+
 //import '../components/hori_scroll.dart';
 
 class miniTabbar extends StatefulWidget {
@@ -28,7 +30,7 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                       color: Colors.grey
@@ -39,35 +41,35 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
             child: TabBar(
               tabs: [
                 Container(
-                  height: 30,
+                  height: 40,
                   alignment: Alignment.center,
                   child: Text(
                     '거래량',
                   ),
                 ),
                 Container(
-                  height: 100,
+                  height: 40,
                   alignment: Alignment.center,
                   child: Text(
                     '인기',
                   ),
                 ),
                 Container(
-                  height: 30,
+                  height: 40,
                   alignment: Alignment.center,
                   child: Text(
                     '급상승',
                   ),
                 ),
                 Container(
-                  height: 30,
+                  height: 40,
                   alignment: Alignment.center,
                   child: Text(
-                    '급하라',
+                    '급하락',
                   ),
                 ),
                 Container(
-                  height: 30,
+                  height: 40,
                   alignment: Alignment.center,
                   child: Text(
                     '관심',
@@ -89,7 +91,7 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
               controller: _minitabController,
             ),
           ),
-          Container(//Expanded에서 잠시 높이 설정
+          SizedBox(//Expanded에서 잠시 높이 설정
             //스크롤을 주려했으나 사이즈 설정에러
             //메인탭바스크롤, 미니탭바는 리스트(스크롤X)
             height: 200,
@@ -99,13 +101,13 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
                 Container(
                   color: Colors.yellow[200],
                   alignment: Alignment.center,
-                  //child: horiScroll(), //나중에 가로스크롤 파일 추가
+                  child: const HoriScroll(stocker: ["빌게이츠", "워렌버핏", "짐사이먼스", "켄그리핀"]), //나중에 가로스크롤 파일 추가
 
                 ),
                 Container(
                   color: Colors.yellow[200],
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     '인기',
                     style: TextStyle(
                       fontSize: 30,
@@ -115,7 +117,7 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
                 Container(
                   color: Colors.yellow[200],
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     '급상승',
                     style: TextStyle(
                       fontSize: 30,
@@ -125,7 +127,7 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
                 Container(
                   color: Colors.yellow[200],
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     '급하락',
                     style: TextStyle(
                       fontSize: 30,
@@ -135,7 +137,7 @@ class _miniTabbarState extends State<miniTabbar> with TickerProviderStateMixin {
                 Container(
                   color: Colors.yellow[200],
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     '관심',
                     style: TextStyle(
                       fontSize: 30,

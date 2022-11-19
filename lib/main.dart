@@ -92,7 +92,7 @@ class _StockPageState extends State<StockPage> {
           children: [
             FinancialInfo(),
             PoppingCard(),
-            SizedBox(
+            const SizedBox(
               height: 7.0,
             ),
             TabBar(
@@ -101,7 +101,7 @@ class _StockPageState extends State<StockPage> {
               indicatorWeight: 1.5,
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0),
+              padding: const EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0),
               height: 350,
               child: TabBarView(children: [
                 MyStocks(),
